@@ -1,0 +1,25 @@
+version: '3.7'
+services: 
+    web:
+        build: 
+            context: ftp-file-uploader
+            dockerfile: Dockerfile
+        container_name: ftp-web
+        ports: 
+            - '8080:8080'
+        depends_on: 
+            - ftp
+
+    ftp:
+        build: 
+            context: docker-ftp-server
+            dockerfile: Dockerfile
+        container_name: ftp-server
+        volumes: 
+            - db-data:/ftp-home
+        environment: 
+            FTP_USER: saten
+            FTP_PASS: sa
+volumes:
+    db-data:
+    
